@@ -1,11 +1,12 @@
 import express from "express";
+import path from "path";
 import fs from "fs";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(express.static("public"));
+app.use(express.static(path.join(process.cwd(), "public")));
 
 app.get("/api/leaderboard", (req, res) => {
   const leaderboard = JSON.parse(fs.readFileSync("db.json", "utf8"));

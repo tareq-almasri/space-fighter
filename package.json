@@ -1,7 +1,7 @@
 {
   "name": "space-fighter",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "mini game with vanilla js",
   "license": "ISC",
   "author": "Tareq-Almasri",
   "type": "module",
