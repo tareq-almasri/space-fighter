@@ -1,3 +1,42 @@
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = 500; // Fixed width
+canvas.height = window.innerHeight;
+
+const jet = {
+  x: canvas.width / 2,
+  y: canvas.height - 100,
+  size: 30,
+  speed: 8,
+  dx: 0,
+  immune: false,
+};
+
+const bullets = [];
+const bulletSpeed = 15;
+let bulletInterval = 250;
+
+const alienJets = [];
+const toughAliens = [];
+const alienBullets = [];
+const items = [];
+const alienJetSpeed = 2;
+const alienBulletSpeed = 5;
+const alienFrequency = 150; // Higher value = fewer alien jets
+const itemFrequency = 200; // Frequency of items
+let frameCount = 0;
+let score = 0;
+let gameOver = false;
+let shootInterval;
+
+const stars = Array.from({ length: 100 }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  size: Math.random() * 2,
+}));
+// Constants
+const EXPLOSION_EMOJI = "💥";
+
 //form
 // Toggle password visibility
 const passwordInput = document.getElementById("password");
@@ -62,7 +101,7 @@ navScore.textContent += user.score || 0;
 
 signupBtn.addEventListener("click", () => {
   form.classList.add("show");
-  form.btn.innerText = "Sign Up";
+  form.querySelector("button").innerText = "Sign Up";
   startBox.style.display = "none";
 });
 
@@ -117,7 +156,7 @@ checkName.addEventListener("click", () => {
 form.addEventListener("submit", (e) => {
   loggedIn = e.target.btn.textContent === "Login";
   e.preventDefault();
-  fetch(loggedIn ? "/api/login" : `/api/signup/${e.target.username.value}`, {
+  fetch(loggedIn ? "/api/login" : `/api/signup/${e.target.querySelector("#username").value}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -138,42 +177,6 @@ form.addEventListener("submit", (e) => {
     });
 });
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-canvas.width = 500; // Fixed width
-canvas.height = window.innerHeight;
-
-const jet = {
-  x: canvas.width / 2,
-  y: canvas.height - 100,
-  size: 30,
-  speed: 8,
-  dx: 0,
-  immune: false,
-};
-
-const bullets = [];
-const bulletSpeed = 15;
-let bulletInterval = 250;
-
-const alienJets = [];
-const toughAliens = [];
-const alienBullets = [];
-const items = [];
-const alienJetSpeed = 2;
-const alienBulletSpeed = 5;
-const alienFrequency = 150; // Higher value = fewer alien jets
-const itemFrequency = 200; // Frequency of items
-let frameCount = 0;
-let score = 0;
-let gameOver = false;
-let shootInterval;
-
-const stars = Array.from({ length: 100 }, () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * canvas.height,
-  size: Math.random() * 2,
-}));
 
 function drawStars() {
   ctx.fillStyle = "white";
@@ -339,12 +342,11 @@ function drawItems() {
       const scaleX = Math.abs(Math.cos(coinRotationAngle)); // Scale the width based on the rotation angle
       ctx.scale(scaleX, 1); // Apply horizontal scaling
       ctx.fillText(emoji, 0, 0); // Draw the emoji at the scaled position
-      ctx.restore(); // Restore the canvas state
     } else {
       // Draw other items without rotation
       ctx.fillText(emoji, item.x, item.y);
-      ctx.restore();
     }
+    ctx.restore(); // Restore the canvas state
   });
 
   // Increment the rotation angle for the coin
@@ -440,7 +442,7 @@ function showExplosion() {
   ctx.font = "50px Arial";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText("💥", jet.x, jet.y);
+  ctx.fillText(EXPLOSION_EMOJI, jet.x, jet.y);
 }
 function detectBulletHits() {
   bullets.forEach((bullet, bulletIndex) => {
@@ -534,7 +536,7 @@ function gameLoop() {
         body: JSON.stringify(user),
       })
         .then((res) => res.json())
-        .then((data) => {
+        .then(() => {
           document.getElementById("gameOver").style.display = "flex";
           document.addEventListener("keydown", () => restartGame());
         });
