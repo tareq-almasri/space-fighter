@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(process.cwd(), "public")));
 
-app.get("/api/leaderboard", (req, res) => {
+app.get("/api/leaderboard", (_, res) => {
   const leaderboard = JSON.parse(fs.readFileSync("db.json", "utf8"));
   res.json(leaderboard);
 });
@@ -22,7 +22,7 @@ function checkUsername(req, res, next) {
   }
 }
 
-app.get("/api/signup/:username", checkUsername,(req,res)=>{
+app.get("/api/signup/:username", checkUsername, (_, res) => {
   res.json("✔️ available")
 });
 
