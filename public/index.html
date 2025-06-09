@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/a75e292bfc.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Space Fighter</title>
+  </head>
+  <body>
+    <canvas id="gameCanvas"></canvas>
+    <div class="score" id="score">Score: 0</div>
+    <div id="header">
+      <div class="nav-board">Leaderboard</div>
+      <div class="nav-user">username:</div>
+      <div class="nav-score">Your Highest Score:</div>
+    </div>
+    <div id="leaderboard">
+      <button class="back secondary"><< back</button>
+    </div>
+    <div class="game-over" id="gameOver">
+      <b>Game Over!</b> <br />
+      press any key to restart
+    </div>
+    <div class="game-over" id="end-prompt">
+      <p>Would you like to save your score into the leaderboard?</p>
+      <div>
+        <button class="yes-btn primary">Yes</button>
+        <button class="no-btn secondary">No</button>
+      </div>
+    </div>
+    <div class="start-screen">
+      <button class="start primary">Start</button> <br />
+      <button class="logout secondary">Log out</button> <br />
+      <div id="start-prompt">
+        To save your score you can
+        <span class="signup btn">Signup</span>
+        <div>
+          Or <span class="login btn">Login</span> if you already have an account
+        </div>
+      </div>
+    </div>
+    <form>
+      <label for="username">Username:</label>
+      <input required type="text" name="username" id="username" />
+      <div>
+        <span id="check"> check availability? </span> " " <span id="msg"></span>
+      </div>
+      <label for="password">Password:</label>
+      <input required type="password" name="password" id="password" />
+      <i id="eye1" class="fa-solid fa-eye"></i>
+      <i id="eye2" class="fa-solid fa-eye-slash"></i>
+      <button id="submit" class="primary" name="btn" type="submit">
+        Sign Up
+      </button>
+    </form>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
